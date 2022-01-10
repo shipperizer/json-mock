@@ -6,7 +6,7 @@
 # BUILDPLATFORM is an automatic platform ARG enabled by Docker BuildKit.
 # Represents the plataform where the build is happening, do not mix with
 # TARGETARCH
-FROM docker.io/library/node:16.0.0-slim@sha256:2cc239701e22ed59a2c918f4ba3625a3516b461010b5ce252efdd75e51e2b28b
+FROM --platform=$BUILDPLATFORM docker.io/library/node:16.0.0-slim@sha256:2cc239701e22ed59a2c918f4ba3625a3516b461010b5ce252efdd75e51e2b28b
 RUN npm install -g json-server \
     && apt-get update \
     && apt-get upgrade -y \
@@ -14,6 +14,8 @@ RUN npm install -g json-server \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+LABEL org.opencontainers.image.source=https://github.com/shipperizer/json-mock
 
 ADD run.sh default.json /
 ENTRYPOINT ["bash", "/run.sh"]
