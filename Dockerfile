@@ -1,12 +1,8 @@
-# syntax=docker/dockerfile:1.2
-
-# Copyright 2021 Authors of Cilium
-# SPDX-License-Identifier: Apache-2.0
-
-# BUILDPLATFORM is an automatic platform ARG enabled by Docker BuildKit.
-# Represents the plataform where the build is happening, do not mix with
-# TARGETARCH
 FROM --platform=$BUILDPLATFORM docker.io/node:16.13.1-stretch-slim
+
+ARG SKAFFOLD_GO_GCFLAGS
+ARG TARGETOS
+ARG TARGETARCH
 
 RUN npm install -g json-server \
     && apt-get update \
@@ -17,6 +13,8 @@ RUN npm install -g json-server \
     && rm -rf /var/lib/apt/lists/*
 
 LABEL org.opencontainers.image.source=https://github.com/shipperizer/json-mock
+
+RUN uname -a
 
 ADD run.sh default.json /
 ENTRYPOINT ["bash", "/run.sh"]
