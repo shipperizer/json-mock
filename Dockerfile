@@ -1,4 +1,4 @@
-FROM node:16.13.1-stretch-slim
+FROM ----platform=$BUILDPLATFORM node:16.13.1-stretch-slim
 
 ARG SKAFFOLD_GO_GCFLAGS
 ARG TARGETOS
@@ -13,8 +13,6 @@ RUN npm install -g json-server \
     && rm -rf /var/lib/apt/lists/*
 
 LABEL org.opencontainers.image.source=https://github.com/shipperizer/json-mock
-
-RUN uname -a
 
 ADD run.sh default.json /
 ENTRYPOINT ["bash", "/run.sh"]
