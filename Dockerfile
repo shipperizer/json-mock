@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM docker.io/node:16.13.1-stretch-slim
+FROM node:16.13.1-stretch-slim
 
 ARG SKAFFOLD_GO_GCFLAGS
 ARG TARGETOS
